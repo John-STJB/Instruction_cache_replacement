@@ -1,0 +1,160 @@
+#include "cache.h"
+
+
+//ghrp vars
+#define numPredTables 3
+#define numCounts 4096
+#define bypass_threshold 2048
+#define dead_threshold 10
+int *cntrsNew;
+uint16_t **predTables;
+int *indices;
+int history;
+bool isDead;
+int sign=0;
+
+int signature(uint64_t ip,int history)
+{
+    int signature = history ^ ip;
+    return signature % 65536;
+}
+
+int* ComputeIndices (int sign){
+    int indices_new[numPredTables];
+    for(int i=0;i<numPredTables;i++)    
+    {
+        indices_new[i] = sign ^ i;
+    }
+    return indices_new;
+} 
+
+int* GetCounters(uint16_t** predTables,int* indices)
+{
+    int counters[numPredTables];
+    for(int t=0; t<numPredTables;t++)
+    {
+        counters[t] =predTables[indices[t]][t];
+    }
+    return counters;
+}
+
+bool MajorityVote(int* cntrs, int threshold)
+{
+    int vote =0;
+    for(int i=0;i<numPredTables;i++)
+    {
+        if(cntrs[i]>threshold)
+        {
+            vote++;
+        }
+        
+    }
+    if(vote>=numPredTables/2) return true;
+    else return false;
+}
+
+void updatePredTables(int* indices, bool isDead)
+{
+    for(int t=0; t<numPredTables;t++)
+    {
+        if(isDead)
+        {
+            predTables[indices[t]][t]++;
+        }
+        else
+        {
+            predTables[indices[t]][t]--;
+        }
+        predTables[indices[t]][t]=predTables[indices[t]][t]%4;
+    }
+}
+
+void UpdatePathHist(uint64_t ip)
+{
+    history=history<<4;
+    history=history|(ip&7);
+    history=history%65536;
+}
+
+// initialize replacement state
+void CACHE::l1i_initialize_replacement()
+{
+    memset(indices, 0, sizeof (int)*numPredTables);
+    memset(cntrsNew, 0, sizeof (int)*numPredTables);
+    memset(cntrsNew, 0, sizeof (int)*numCounts*numPredTables);
+    history=0;
+    
+    for(int j=0;j<numCounts;j++){
+        for(int i=0;i<numPredTables;i++)    predTables[j][i];
+    }
+}
+
+// find replacement victim
+uint32_t CACHE::l1i_find_victim(uint32_t cpu, uint64_t instr_id, uint32_t set, BLOCK *current_set, uint64_t ip, uint64_t full_addr, uint32_t type)
+{
+/*
+    BLOCK victimBlock;
+    bool bypass,foundvictim=false, pred;
+    uint32_t victim;
+    bypass=MajorityVote(cntrsNew,bypass_threshold);
+    if(!bypass)
+    {
+        for (int i=0; i<L1I_WAY;i++)
+        {
+            victimBlock = current_set[i];
+            if(victimBlock.dead)
+            {
+            victim =i;
+                foundvictim =true;
+                break;
+            }
+        }
+        if(!foundvictim)
+            victim = lru_victim(cpu, instr_id, set, current_set, ip, full_addr, type);
+        indices= ComputeIndices(current_set[victim].sig);
+        isDead = true;
+        updatePredTables(indices,isDead);
+        pred =MajorityVote(cntrsNew,dead_threshold);
+        current_set[victim].dead=pred;
+        
+
+
+                                                                         
+    }
+    return victim;*/
+ return  lru_victim(cpu, instr_id, set, current_set, ip, full_addr, type);
+ 
+}
+
+// called on every cache hit and cache fill
+void CACHE::l1i_update_replacement_state(uint32_t cpu, uint32_t set, uint32_t way, uint64_t full_addr,BLOCK *current_set, uint64_t ip, uint64_t victim_addr, uint32_t type, uint8_t hit)
+{
+/*    bool pred = false;
+    sign = signature(ip,history);    
+    indices= ComputeIndices(sign);
+    cntrsNew= GetCounters(predTables,indices);
+   
+    if(hit)
+    {
+        
+        indices= ComputeIndices(current_set[way].sig);
+        isDead=false;
+        updatePredTables(indices, isDead);
+        pred=MajorityVote(cntrsNew,dead_threshold);
+        current_set[way].dead=pred;
+    }
+    current_set[way].sig=sign;
+    UpdatePathHist(ip);
+    
+
+    
+*/
+    return lru_update(set, way);
+}
+
+void CACHE::l1i_replacement_final_stats()
+{
+
+}
+
+

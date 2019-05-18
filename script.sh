@@ -1,0 +1,19 @@
+#!/bin/sh
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 gcc_13B      lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 gemsFDTD_712B lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 gobmk_135B   lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 gromacs_1B   lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 h264ref_351B lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 hmmer_7B     lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 leslie3d_94B lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 omnetpp_340B lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 perlbench_53B lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 povray_711B  lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 sjeng_1966B  lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 soplex_205B  lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 sphinx3_1339B lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 tonto_2049B  lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 tonto_422B   lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 wrf_1228B    lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 xalancbmk_99B lru_4_64 &
+./scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 zeusmp_600B  lru_4_64 &

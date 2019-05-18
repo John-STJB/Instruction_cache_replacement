@@ -1,0 +1,15 @@
+
+*** ChampSim Multicore Out-of-Order Simulator ***
+
+Warmup Instructions: 20000000
+Simulation Instructions: 100000000
+Number of CPUs: 1
+LLC sets: 2048
+LLC ways: 16
+L1I sets: 64
+L1I ways: 8
+Off-chip DRAM Size: 4096 MB Channels: 1 Width: 64-bit Data Rate: 1600 MT/s
+
+bimodal-no-no-lru-lru-1core: src/main.cc:563: int main(int, char**): Assertion `false' failed.
+CPU 0 runs /home/faculty/p/pgratz/CRC2_trace/gemsFDTD_712B.trace.xz
+TRACE FILE DOES NOT EXIST

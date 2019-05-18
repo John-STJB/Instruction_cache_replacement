@@ -1,0 +1,7 @@
+#!/bin/sh
+scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 gcc_13B lru_8_64_new &
+scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 leslie3d_94B lru_8_64_new &
+scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 soplex_205B lru_8_64_new &
+scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 sphinx3_1339B lru_8_64_new &
+scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 tonto_422B lru_8_64_new &
+scripts/run_champsim.sh bimodal-no-no-lru-lru-1core 20 100 zeusmp_600B lru_8_64_new &
